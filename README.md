@@ -23,7 +23,7 @@ pak::pak("ajplum/trackingfootballR")
 ## Example
 
 This is a basic example which shows you how to utilize the functions of
-trackingfootballR and return JSON listed data:
+trackingfootballR and return JSON listed data for NCAA and highschool:
 
 ``` r
 library(trackingfootballR)
