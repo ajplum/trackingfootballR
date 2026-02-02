@@ -16,8 +16,8 @@ You can install the development version of trackingfootballR from
 [GitHub](https://github.com/) with:
 
 ``` r
-# install.packages("pak")
-pak::pak("ajplum/trackingfootballR")
+# install.packages("devtools")
+remotes::install_github("ajplum/trackingfootballR")
 ```
 
 ## Example
