@@ -6,7 +6,7 @@
 #' @import jsonlite
 #' @import dplyr
 #' @import purrr
-#' #' @examples
+#' @examples
 #' \dontrun{
 #' df <- get_watchList(player_list)
 #' }

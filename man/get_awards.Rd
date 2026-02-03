@@ -15,3 +15,8 @@ all players listed on College or NFL awards lists
 \description{
 Parse Award List data from Tracking Football Player List
 }
+\examples{
+\dontrun{
+df <- get_awards(player_list)
+}
+}

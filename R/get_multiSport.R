@@ -6,7 +6,7 @@
 #' @import jsonlite
 #' @import dplyr
 #' @import purrr
-#' #' @examples
+#' @examples
 #' \dontrun{
 #' df <- get_multiSport(player_list)
 #' }

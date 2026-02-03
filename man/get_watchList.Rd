@@ -15,3 +15,8 @@ all players listed on College all-star game watch lists
 \description{
 Parse College Watch List data from Tracking Football Player List
 }
+\examples{
+\dontrun{
+df <- get_watchList(player_list)
+}
+}
