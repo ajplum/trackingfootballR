@@ -15,3 +15,8 @@ High school sports played by all players listed
 \description{
 Parse Multi Sport data from Tracking Football Player List
 }
+\examples{
+\dontrun{
+df <- get_multiSport(player_list)
+}
+}
