@@ -56,6 +56,7 @@ get_hsCombines <- function(player_list) {
     tidyr::unnest("weightPerc", names_sep = "_", keep_empty = TRUE) %>%
     tidyr::unnest("wingspanPerc", names_sep = "_", keep_empty = TRUE) %>%
     dplyr::rowwise() %>%
+    # Fixing the issue of unnesting and creating unwanted duplicates using the "_code" columns
     dplyr::filter({
       vals   <- dplyr::c_across(dplyr::ends_with("_code"))
       non_na <- vals[!is.na(vals)]
@@ -83,43 +84,43 @@ get_hsCombines <- function(player_list) {
       combine_isPrimary = if ("combine_isPrimary" %in% names(.)) {combine_isPrimary}
       else {NA_character_},
 
-      # 3. If there is no armPerc_code, then create arm_code as NA
+      # 5. If there is no armPerc_code, then create arm_code as NA
       arm_code = if ("armPerc_code" %in% names(.)) {armPerc_code}
       else {NA_character_},
 
-      # 2. If there is no armPerc_percentile, then create arm_perc as NA
+      # 6. If there is no armPerc_percentile, then create arm_perc as NA
       arm_perc = if ("armPerc_percentile" %in% names(.)) {armPerc_percentile}
       else {NA_character_},
 
-      # 3. If there is no handPerc_code, then create hand_code as NA
+      # 7. If there is no handPerc_code, then create hand_code as NA
       hand_code = if ("handPerc_code" %in% names(.)) {handPerc_code}
       else {NA_character_},
 
-      # 2. If there is no handPerc_percentile, then create hand_perc as NA
+      # 8. If there is no handPerc_percentile, then create hand_perc as NA
       hand_perc = if ("handPerc_percentile" %in% names(.)) {handPerc_percentile}
       else {NA_character_},
 
-      # 3. If there is no heightPerc_code, then create height_code as NA
+      # 9. If there is no heightPerc_code, then create height_code as NA
       height_code = if ("heightPerc_code" %in% names(.)) {heightPerc_code}
       else {NA_character_},
 
-      # 2. If there is no heightPerc_percentile, then create height_perc as NA
+      # 10. If there is no heightPerc_percentile, then create height_perc as NA
       height_perc = if ("heightPerc_percentile" %in% names(.)) {heightPerc_percentile}
       else {NA_character_},
 
-      # 3. If there is no weightPerc_code, then create weight_code as NA
+      # 11. If there is no weightPerc_code, then create weight_code as NA
       weight_code = if ("weightPerc_code" %in% names(.)) {weightPerc_code}
       else {NA_character_},
 
-      # 2. If there is no weightPerc_percentile, then create weight_perc as NA
+      # 12. If there is no weightPerc_percentile, then create weight_perc as NA
       weight_perc = if ("weightPerc_percentile" %in% names(.)) {weightPerc_percentile}
       else {NA_character_},
 
-      # 3. If there is no wingspanPerc_code, then create wingspan_code as NA
+      # 13. If there is no wingspanPerc_code, then create wingspan_code as NA
       wingspan_code = if ("wingspanPerc_code" %in% names(.)) {wingspanPerc_code}
       else {NA_character_},
 
-      # 2. If there is no wingspanPerc_percentile, then create wingspan_perc as NA
+      # 14. If there is no wingspanPerc_percentile, then create wingspan_perc as NA
       wingspan_perc = if ("wingspanPerc_percentile" %in% names(.)) {wingspanPerc_percentile}
       else {NA_character_},
 
