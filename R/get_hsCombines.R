@@ -15,12 +15,54 @@
 
 get_hsCombines <- function(player_list) {
 
-  purrr::map_dfr(player_list, "hsCombines") %>%
+  purrr::map_dfr(NEW_NCAA_player_details, "hsCombines") %>%
     tidyr::unnest("combine", names_sep = "_", keep_empty = TRUE) %>%
     dplyr::select(-one_of("combine")) %>%
-    dplyr::group_by_all() %>%
-    dplyr::distinct(playerId, .keep_all = TRUE) %>%
+    dplyr::mutate(
+      armPerc = purrr::map(armPerc, function(x) {
+        if (is.null(x) || length(x) == 0) return(NULL)
+        if (is.data.frame(x)) return(x)
+        if (is.list(x)) return(as.data.frame(x, stringsAsFactors = FALSE))
+        return(NULL)
+      }),
+      handPerc = purrr::map(handPerc, function(x) {
+        if (is.null(x) || length(x) == 0) return(NULL)
+        if (is.data.frame(x)) return(x)
+        if (is.list(x)) return(as.data.frame(x, stringsAsFactors = FALSE))
+        return(NULL)
+      }),
+      heightPerc = purrr::map(heightPerc, function(x) {
+        if (is.null(x) || length(x) == 0) return(NULL)
+        if (is.data.frame(x)) return(x)
+        if (is.list(x)) return(as.data.frame(x, stringsAsFactors = FALSE))
+        return(NULL)
+      }),
+      weightPerc = purrr::map(weightPerc, function(x) {
+        if (is.null(x) || length(x) == 0) return(NULL)
+        if (is.data.frame(x)) return(x)
+        if (is.list(x)) return(as.data.frame(x, stringsAsFactors = FALSE))
+        return(NULL)
+      }),
+      wingspanPerc = purrr::map(wingspanPerc, function(x) {
+        if (is.null(x) || length(x) == 0) return(NULL)
+        if (is.data.frame(x)) return(x)
+        if (is.list(x)) return(as.data.frame(x, stringsAsFactors = FALSE))
+        return(NULL)
+      })
+    ) %>%
+    tidyr::unnest("armPerc", names_sep = "_", keep_empty = TRUE) %>%
+    tidyr::unnest("handPerc", names_sep = "_", keep_empty = TRUE) %>%
+    tidyr::unnest("heightPerc", names_sep = "_", keep_empty = TRUE) %>%
+    tidyr::unnest("weightPerc", names_sep = "_", keep_empty = TRUE) %>%
+    tidyr::unnest("wingspanPerc", names_sep = "_", keep_empty = TRUE) %>%
+    dplyr::rowwise() %>%
+    dplyr::filter({
+      vals   <- dplyr::c_across(dplyr::ends_with("_code"))
+      non_na <- vals[!is.na(vals)]
+      length(unique(non_na)) <= 1
+    }) %>%
     dplyr::ungroup() %>%
+    dplyr::distinct() %>%
     dplyr::group_by(playerId) %>%
     dplyr::mutate(
 
@@ -29,7 +71,7 @@ get_hsCombines <- function(player_list) {
         stringr::str_replace(toString(unique(unlist(strsplit(combine_code, ",\\s*")))), "NA, |, NA", "")}
       else {NA_character_},
 
-      # 2. If there is no combine_code, then create combine_perc as NA
+      # 2. If there is no combine_combine, then create combine_perc as NA
       combine_perc = if ("combine_combine" %in% names(.)) {combine_combine}
       else {NA_character_},
 
@@ -41,10 +83,55 @@ get_hsCombines <- function(player_list) {
       combine_isPrimary = if ("combine_isPrimary" %in% names(.)) {combine_isPrimary}
       else {NA_character_},
 
-      createdAt  = as.character(createdAt),
-      updatedAt  = as.character(updatedAt),
+      # 3. If there is no armPerc_code, then create arm_code as NA
+      arm_code = if ("armPerc_code" %in% names(.)) {armPerc_code}
+      else {NA_character_},
+
+      # 2. If there is no armPerc_percentile, then create arm_perc as NA
+      arm_perc = if ("armPerc_percentile" %in% names(.)) {armPerc_percentile}
+      else {NA_character_},
+
+      # 3. If there is no handPerc_code, then create hand_code as NA
+      hand_code = if ("handPerc_code" %in% names(.)) {handPerc_code}
+      else {NA_character_},
+
+      # 2. If there is no handPerc_percentile, then create hand_perc as NA
+      hand_perc = if ("handPerc_percentile" %in% names(.)) {handPerc_percentile}
+      else {NA_character_},
+
+      # 3. If there is no heightPerc_code, then create height_code as NA
+      height_code = if ("heightPerc_code" %in% names(.)) {heightPerc_code}
+      else {NA_character_},
+
+      # 2. If there is no heightPerc_percentile, then create height_perc as NA
+      height_perc = if ("heightPerc_percentile" %in% names(.)) {heightPerc_percentile}
+      else {NA_character_},
+
+      # 3. If there is no weightPerc_code, then create weight_code as NA
+      weight_code = if ("weightPerc_code" %in% names(.)) {weightPerc_code}
+      else {NA_character_},
+
+      # 2. If there is no weightPerc_percentile, then create weight_perc as NA
+      weight_perc = if ("weightPerc_percentile" %in% names(.)) {weightPerc_percentile}
+      else {NA_character_},
+
+      # 3. If there is no wingspanPerc_code, then create wingspan_code as NA
+      wingspan_code = if ("wingspanPerc_code" %in% names(.)) {wingspanPerc_code}
+      else {NA_character_},
+
+      # 2. If there is no wingspanPerc_percentile, then create wingspan_perc as NA
+      wingspan_perc = if ("wingspanPerc_percentile" %in% names(.)) {wingspanPerc_percentile}
+      else {NA_character_},
+
+      createdAt   = as.character(createdAt),
+      updatedAt   = as.character(updatedAt),
       combineDate = as.character(combineDate)) %>%
-    dplyr::select(-one_of("combine_combine")) %>% # Remove combine_combine if persists
+    dplyr::select(-any_of(c("combine_combine", "armPerc_code",
+                            "armPerc_percentile", "handPerc_code",
+                            "handPerc_percentile", "heightPerc_code",
+                            "heightPerc_percentile", "weightPerc_code",
+                            "weightPerc_percentile", "wingspanPerc_code",
+                            "wingspanPerc_percentile"))) %>%
     dplyr::mutate(across(everything(), ~ ifelse(trimws(.) == "", NA, .))) %>%
     dplyr::rename_with(~ paste0("tf_hsCombines_", .), .cols = -c(playerId)) %>%
     dplyr::rename("tf_playerId" = playerId)
