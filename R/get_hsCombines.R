@@ -15,7 +15,7 @@
 
 get_hsCombines <- function(player_list) {
 
-  purrr::map_dfr(NEW_NCAA_player_details, "hsCombines") %>%
+  purrr::map_dfr(player_list, "hsCombines") %>%
     tidyr::unnest("combine", names_sep = "_", keep_empty = TRUE) %>%
     dplyr::select(-one_of("combine")) %>%
     dplyr::mutate(
