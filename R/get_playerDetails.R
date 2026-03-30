@@ -27,7 +27,10 @@ get_playerDetails <- function(player_list) {
     dplyr::distinct(playerId, .keep_all = TRUE) %>%
     dplyr::rename_with(~ paste0("tf_playerDetails_", .), .cols = -c(playerId)) %>%
     dplyr::rename("tf_playerId" = playerId) %>%
-    dplyr::mutate(tf_playerDetails_pffId = dplyr::case_when(tf_playerDetails_pffId == "0" ~ NA_character_,
-                                                            TRUE ~ tf_playerDetails_pffId))
+    (\(x) if ("tf_playerDetails_pffId" %in% names(x)) dplyr::mutate(x,
+                                                    tf_playerDetails_pffId = dplyr::case_when(tf_playerDetails_pffId == "0" ~ NA_character_,
+                                                                                              TRUE ~ tf_playerDetails_pffId)) else x)()
+    # dplyr::mutate(tf_playerDetails_pffId = dplyr::case_when(tf_playerDetails_pffId == "0" ~ NA_character_,
+    #                                                         TRUE ~ tf_playerDetails_pffId))
 
 }
