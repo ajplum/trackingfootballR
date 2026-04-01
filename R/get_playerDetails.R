@@ -30,7 +30,5 @@ get_playerDetails <- function(player_list) {
     (\(x) if ("tf_playerDetails_pffId" %in% names(x)) dplyr::mutate(x,
                                                     tf_playerDetails_pffId = dplyr::case_when(tf_playerDetails_pffId == "0" ~ NA_character_,
                                                                                               TRUE ~ tf_playerDetails_pffId)) else x)()
-    # dplyr::mutate(tf_playerDetails_pffId = dplyr::case_when(tf_playerDetails_pffId == "0" ~ NA_character_,
-    #                                                         TRUE ~ tf_playerDetails_pffId))
 
 }
