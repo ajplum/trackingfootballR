@@ -77,7 +77,7 @@ get_hsCombines <- function(player_list) {
       else {NA_character_},
 
       # 3. If there is no combine_code, then create combine_code as NA
-      combine_code = if ("combine_code" %in% names(.)) {combine_code}
+      combine_code = if ("combine_code" %in% names(.)) {as.character(combine_code)}
       else {NA_character_},
 
       # 4. If there is no combine_isPrimary, then create combine_isPrimary as NA
@@ -85,7 +85,7 @@ get_hsCombines <- function(player_list) {
       else {NA_character_},
 
       # 5. If there is no armPerc_code, then create arm_code as NA
-      arm_code = if ("armPerc_code" %in% names(.)) {armPerc_code}
+      arm_code = if ("armPerc_code" %in% names(.)) {as.character(armPerc_code)}
       else {NA_character_},
 
       # 6. If there is no armPerc_percentile, then create arm_perc as NA
@@ -93,7 +93,7 @@ get_hsCombines <- function(player_list) {
       else {NA_character_},
 
       # 7. If there is no handPerc_code, then create hand_code as NA
-      hand_code = if ("handPerc_code" %in% names(.)) {handPerc_code}
+      hand_code = if ("handPerc_code" %in% names(.)) {as.character(handPerc_code)}
       else {NA_character_},
 
       # 8. If there is no handPerc_percentile, then create hand_perc as NA
@@ -101,7 +101,7 @@ get_hsCombines <- function(player_list) {
       else {NA_character_},
 
       # 9. If there is no heightPerc_code, then create height_code as NA
-      height_code = if ("heightPerc_code" %in% names(.)) {heightPerc_code}
+      height_code = if ("heightPerc_code" %in% names(.)) {as.character(heightPerc_code)}
       else {NA_character_},
 
       # 10. If there is no heightPerc_percentile, then create height_perc as NA
@@ -109,7 +109,7 @@ get_hsCombines <- function(player_list) {
       else {NA_character_},
 
       # 11. If there is no weightPerc_code, then create weight_code as NA
-      weight_code = if ("weightPerc_code" %in% names(.)) {weightPerc_code}
+      weight_code = if ("weightPerc_code" %in% names(.)) {as.character(weightPerc_code)}
       else {NA_character_},
 
       # 12. If there is no weightPerc_percentile, then create weight_perc as NA
@@ -117,7 +117,7 @@ get_hsCombines <- function(player_list) {
       else {NA_character_},
 
       # 13. If there is no wingspanPerc_code, then create wingspan_code as NA
-      wingspan_code = if ("wingspanPerc_code" %in% names(.)) {wingspanPerc_code}
+      wingspan_code = if ("wingspanPerc_code" %in% names(.)) {as.character(wingspanPerc_code)}
       else {NA_character_},
 
       # 14. If there is no wingspanPerc_percentile, then create wingspan_perc as NA
