@@ -25,6 +25,8 @@ get_highSchools <- function(player_list) {
     dplyr::filter(positions_isPrimary == TRUE) %>%
     dplyr::select(-c("id")) %>%
     dplyr::distinct(playerId, .keep_all = TRUE) %>%
+    mutate(heightPerc = map(heightPerc, as.data.frame)) %>%
+    mutate(weightPerc = map(weightPerc, as.data.frame)) %>%
     tidyr::unnest("heightPerc", names_sep = "_") %>%
     tidyr::unnest("weightPerc", names_sep = "_") %>%
     dplyr::filter(heightPerc_code == positions_code & weightPerc_code == positions_code) %>%
